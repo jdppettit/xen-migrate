@@ -19,6 +19,9 @@ targetuser = args.targetuser
 targetip = args.targetip
 targetdir = args.targetdir
 
+# Attempts to copy the xen config from arg specified location
+# to /tmp/config.xen
+
 print "copying config from %s to /tmp" % configpath
 string = "cp %s /tmp/config.xen" % configpath
 
@@ -27,6 +30,8 @@ try:
 except Exception, e:
 	print "Couldn't do it: %s" % e
 	sys.exit(0)
+
+# Attempts to DD the disk image from specified loc to /tmp
 
 string = "dd if=%s of=/tmp/tempdisk.xen" % diskpath
 print "dd from %s to /tmp, please wait" % diskpath
@@ -46,6 +51,8 @@ except Exception, e:
 	print "Couldn't do it: %s" % e
 	sys.exit(0)
 
+# Initiates SCP to other host and copies as per the stuff you input
+
 string = "scp /tmp/*.xen %s@%s:%s" % (targetuser, targetip, targetdir)
 print "scping data from /tmp to %s please wait" % targetip
 
@@ -55,6 +62,8 @@ except Exception, e:
 	print "Couldn't do it: %s" % e
 	sys.exit(0)
 
+# Clean up that mess!
+
 print "success, deleting temporary images"
 
 try:
@@ -63,6 +72,5 @@ except Exception, e:
 	print "Couldn't do it: %s" % e
 	sys.exit(0)
 
-print "removed, done."
-
+	print "removed, done."
 
